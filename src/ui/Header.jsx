@@ -1,15 +1,18 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const cart = useSelector((state) => state.carts.cart);
+
   return (
     <header className="header bg-white">
       <div className="container px-lg-3">
         <nav className="navbar navbar-expand-lg navbar-light py-3 px-lg-0">
-          <a className="navbar-brand" href="index.html">
+          <Link className="navbar-brand" to={"/"}>
             <span className="fw-bold text-uppercase text-dark">
               DevEmma Shop
             </span>
-          </a>
+          </Link>
           <button
             className="navbar-toggler navbar-toggler-end"
             type="button"
@@ -33,12 +36,17 @@ const Header = () => {
                   Shop
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to={"/shop"}>
+                  Orders
+                </NavLink>
+              </li>
             </ul>
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <NavLink className="nav-link" to={"/cart"}>
                   <i className="fas fa-dolly-flatbed me-1 text-gray"></i>Cart
-                  <small className="text-gray fw-normal">(2)</small>
+                  <small className="text-gray fw-normal">({cart.length})</small>
                 </NavLink>
               </li>
               <li className="nav-item">

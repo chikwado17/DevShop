@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useRouteError, useNavigate } from "react-router-dom";
 
-const NotFoundPage = () => {
+const ErrorPage = () => {
+  const navigate = useNavigate();
+  const error = useRouteError();
   return (
     <section
       style={{ marginTop: "-150px" }}
@@ -15,17 +17,17 @@ const NotFoundPage = () => {
                 <span className="display-1 fw-bold text-danger">0</span>
                 <span className="display-1 fw-bold bsb-flip-h">4</span>
               </h2>
-              <h3 className="h2 mb-2">Oops! You're lost.</h3>
-              <p className="mb-5">
-                The page you are looking for was not found.
-              </p>
-              <Link
+              <h3 className="h2 mb-2">
+                Oops! {error.message || error.data} ⁉️
+              </h3>
+
+              <button
                 className="btn bsb-btn-5xl btn-dark rounded-pill px-5 fs-6 m-0"
-                to={"/"}
+                onClick={() => navigate(-1)}
                 role="button"
               >
-                Back to Home
-              </Link>
+                Go Back
+              </button>
             </div>
           </div>
         </div>
@@ -34,4 +36,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage;
+export default ErrorPage;

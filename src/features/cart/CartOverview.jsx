@@ -94,6 +94,7 @@ const CartOverview = () => {
                             className="form-control form-control-sm border-0 shadow-0 p-0"
                             type="text"
                             value="1"
+                            onChange={() => "setValue"}
                           />
                           <button className="inc-btn p-0">
                             <i className="fas fa-caret-right"></i>

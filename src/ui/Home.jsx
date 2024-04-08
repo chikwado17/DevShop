@@ -1,4 +1,3 @@
-import ProductsList from "../features/products/ProductsList";
 import Breadcrumb from "./Breadcrumb";
 import Categories from "./Categories";
 import ShippingDetails from "./ShippingDetails";
@@ -8,7 +7,7 @@ const Home = () => {
     <>
       <Breadcrumb />
       <Categories />
-      <ProductsList />
+      <div className="py-5"></div>
       <ShippingDetails />
     </>
   );
