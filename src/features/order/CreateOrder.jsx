@@ -217,7 +217,7 @@ const CheckOut = () => {
                     <strong className="small fw-bold">Sub Total</strong>
 
                     <span className="text-muted small">
-                      ${totalPricesInCart}
+                      ${totalPricesInCart.toFixed(2)}
                     </span>
                   </li>
 

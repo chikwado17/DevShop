@@ -6,6 +6,7 @@ import { clearOrders } from "../cart/cartSlice";
 
 const SuccessPage = () => {
   const orders = useSelector((state) => state.carts.orders);
+  const totalAmount = orders[0].totalPurchaseAmount + 100;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -105,7 +106,7 @@ const SuccessPage = () => {
                 <b> Total:</b>
               </div>
               <div className="col d-flex justify-content-end">
-                <b>${orders[0].totalPurchaseAmount + 100}</b>
+                <b>${totalAmount.toFixed(2)}</b>
               </div>
             </div>
             <button
