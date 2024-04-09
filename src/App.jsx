@@ -30,7 +30,11 @@ function App() {
           errorElement: <ErrorPage />,
         },
 
-        { path: "/success", element: <SuccessPage /> },
+        {
+          path: "/success",
+          element: <SuccessPage />,
+          errorElement: <ErrorPage />,
+        },
         { path: "*", element: <NotFoundPage /> },
       ],
     },
