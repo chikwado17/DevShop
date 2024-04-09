@@ -233,7 +233,7 @@ const CheckOut = () => {
                     <strong className="text-uppercase small fw-bold">
                       Total
                     </strong>
-                    <span>${totalPricesInCart + 100}</span>
+                    <span>${totalPurchasePrice.toFixed(2)}</span>
                   </li>
                 </ul>
               </div>
