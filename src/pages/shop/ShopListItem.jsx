@@ -1,6 +1,35 @@
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  getCurrentQuantityById,
+  incrementCartQuantity,
+  decrementCartQuantity,
+} from "../../features/cart/cartSlice";
 
 const ShopListItem = ({ product }) => {
+  const cart = useSelector((state) =>
+    state.carts.cart.find((c) => c.productId === product.id)
+  );
+
+  const currentCartQuantity = useSelector(getCurrentQuantityById(product.id));
+
+  const isInCart = currentCartQuantity > 0;
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    const newItem = {
+      productId: product.id,
+      title: product.title,
+      img: product.image,
+      quantity: 1,
+      price: product.price,
+      totalPrice: product.price * 1, // quantity is set to 1 by default
+    };
+
+    dispatch(addToCart(newItem));
+  };
+
   return (
     <>
       <div className="product text-center">
@@ -12,7 +41,54 @@ const ShopListItem = ({ product }) => {
           <div className="product-overlay">
             <ul className="mb-0 list-inline">
               <li className="list-inline-item m-0 p-0">
-                <button className="btn btn-sm btn-dark">Add to cart</button>
+                {!isInCart && (
+                  <button
+                    onClick={handleAddToCart}
+                    className="btn btn-sm btn-dark"
+                  >
+                    Add to cart
+                  </button>
+                )}
+                {isInCart && (
+                  <div
+                    style={{ backgroundColor: "#000" }}
+                    className="border d-flex align-items-center justify-content-between px-3"
+                  >
+                    <span className="small text-uppercase text-gray headings-font-family">
+                      Quantity
+                    </span>
+                    <div className="quantity">
+                      <button
+                        onClick={() =>
+                          dispatch(decrementCartQuantity(cart?.productId))
+                        }
+                        className="dec-btn p-0"
+                      >
+                        <i
+                          style={{ color: "#fff" }}
+                          className="fas fa-caret-left"
+                        ></i>
+                      </button>
+                      <input
+                        className="form-control form-control-sm border-0 shadow-0 p-0"
+                        type="text"
+                        value={cart.quantity}
+                        onChange={() => "setValue"}
+                      />
+                      <button
+                        onClick={() =>
+                          dispatch(incrementCartQuantity(cart?.productId))
+                        }
+                        className="inc-btn p-0"
+                      >
+                        <i
+                          style={{ color: "#fff" }}
+                          className="fas fa-caret-right"
+                        ></i>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </li>
             </ul>
           </div>

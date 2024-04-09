@@ -4,7 +4,6 @@ import { BASE_URL } from "../../utils/API";
 
 const Shop = () => {
   const products = useLoaderData();
-  console.log(products);
 
   return (
     <>

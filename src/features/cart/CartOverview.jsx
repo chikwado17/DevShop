@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
-import product1 from "../../assets/img/product-1.jpg";
+import { useSelector } from "react-redux";
+import CartTable from "./CartTable";
+import { getTotalAmountInCart } from "./cartSlice";
 
 const CartOverview = () => {
+  const cart = useSelector((state) => state.carts.cart);
+
+  const totalPricesInCart = useSelector(getTotalAmountInCart);
+  const totalAmount = totalPricesInCart + 100;
+
+  if (!totalPricesInCart) return;
+
   return (
     <>
       <section className="py-5 bg-light">
@@ -32,87 +41,50 @@ const CartOverview = () => {
         <div className="row">
           <div className="col-lg-8 mb-4 mb-lg-0">
             <div className="table-responsive mb-4">
-              <table className="table text-nowrap">
-                <thead className="bg-light">
-                  <tr>
-                    <th className="border-0 p-3" scope="col">
-                      <strong className="text-sm text-uppercase">
-                        Product
-                      </strong>
-                    </th>
-                    <th className="border-0 p-3" scope="col">
-                      <strong className="text-sm text-uppercase">Price</strong>
-                    </th>
-                    <th className="border-0 p-3" scope="col">
-                      <strong className="text-sm text-uppercase">
-                        Quantity
-                      </strong>
-                    </th>
-                    <th className="border-0 p-3" scope="col">
-                      <strong className="text-sm text-uppercase">Total</strong>
-                    </th>
-                    <th className="border-0 p-3" scope="col">
-                      <strong className="text-sm text-uppercase"></strong>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="border-0">
-                  <tr>
-                    <th className="ps-0 py-3 border-light" scope="row">
-                      <div className="d-flex align-items-center">
-                        <a
-                          className="reset-anchor d-block animsition-link"
-                          href="detail.html"
-                        >
-                          <img src={product1} alt="..." width="70" />
-                        </a>
-                        <div className="ms-3">
-                          <strong className="h6">
-                            <a
-                              className="reset-anchor animsition-link"
-                              href="#!"
-                            >
-                              Red digital smartwatch
-                            </a>
+              {cart.length > 0 ? (
+                <>
+                  <table className="table text-nowrap">
+                    <thead className="bg-light">
+                      <tr>
+                        <th className="border-0 p-3" scope="col">
+                          <strong className="text-sm text-uppercase">
+                            Product
                           </strong>
-                        </div>
-                      </div>
-                    </th>
-                    <td className="p-3 align-middle border-light">
-                      <p className="mb-0 small">$250</p>
-                    </td>
-                    <td className="p-3 align-middle border-light">
-                      <div className="border d-flex align-items-center justify-content-between px-3">
-                        <span className="small text-uppercase text-gray headings-font-family">
-                          Quantity
-                        </span>
-                        <div className="quantity">
-                          <button className="dec-btn p-0">
-                            <i className="fas fa-caret-left"></i>
-                          </button>
-                          <input
-                            className="form-control form-control-sm border-0 shadow-0 p-0"
-                            type="text"
-                            value="1"
-                            onChange={() => "setValue"}
+                        </th>
+                        <th className="border-0 p-3" scope="col">
+                          <strong className="text-sm text-uppercase">
+                            Price
+                          </strong>
+                        </th>
+                        <th className="border-0 p-3" scope="col">
+                          <strong className="text-sm text-uppercase">
+                            Quantity
+                          </strong>
+                        </th>
+                        <th className="border-0 p-3" scope="col">
+                          <strong className="text-sm text-uppercase">
+                            Total
+                          </strong>
+                        </th>
+                        <th className="border-0 p-3" scope="col">
+                          <strong className="text-sm text-uppercase"></strong>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="border-0">
+                      {cart.length > 0 &&
+                        cart.map((cartItem) => (
+                          <CartTable
+                            key={cartItem.productId}
+                            cartItem={cartItem}
                           />
-                          <button className="inc-btn p-0">
-                            <i className="fas fa-caret-right"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-3 align-middle border-light">
-                      <p className="mb-0 small">$250</p>
-                    </td>
-                    <td className="p-3 align-middle border-light">
-                      <a className="reset-anchor" href="#!">
-                        <i className="fas fa-trash-alt small text-muted"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                        ))}
+                    </tbody>
+                  </table>
+                </>
+              ) : (
+                <h5>No item in cart, please shop for products</h5>
+              )}
             </div>
             <div className="bg-light px-4 py-3">
               <div className="row align-items-center text-center">
@@ -125,15 +97,18 @@ const CartOverview = () => {
                     shopping
                   </Link>
                 </div>
-                <div className="col-md-6 text-md-end">
-                  <a
-                    className="btn btn-outline-dark btn-sm"
-                    href="checkout.html"
-                  >
-                    Procceed to checkout
-                    <i className="fas fa-long-arrow-alt-right ms-2"></i>
-                  </a>
-                </div>
+                {cart.length > 0 && (
+                  <div className="col-md-6 text-md-end">
+                    <Link
+                      to={"/order/new"}
+                      className="btn btn-outline-dark btn-sm"
+                      href="checkout.html"
+                    >
+                      Procceed to checkout
+                      <i className="fas fa-long-arrow-alt-right ms-2"></i>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -146,14 +121,22 @@ const CartOverview = () => {
                     <strong className="text-uppercase small font-weight-bold">
                       Subtotal
                     </strong>
-                    <span className="text-muted small">$250</span>
+                    <span className="text-muted small">
+                      ${totalPricesInCart.toFixed(2)}
+                    </span>
+                  </li>
+                  <li className="d-flex align-items-center justify-content-between">
+                    <strong className="text-uppercase small font-weight-bold">
+                      Shipping($100)
+                    </strong>
+                    <span className="text-muted small">$100</span>
                   </li>
                   <li className="border-bottom my-2"></li>
                   <li className="d-flex align-items-center justify-content-between mb-4">
                     <strong className="text-uppercase small font-weight-bold">
                       Total
                     </strong>
-                    <span>$250</span>
+                    <span>${totalAmount.toFixed(2)}</span>
                   </li>
                 </ul>
               </div>

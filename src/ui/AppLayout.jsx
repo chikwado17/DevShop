@@ -8,7 +8,7 @@ const AppLayout = () => {
   const isLoading = navigation.state === "loading";
 
   if (isLoading) {
-    return <Spinner />;
+    return <Spinner isLoading={isLoading} />;
   }
 
   return (

@@ -36,17 +36,16 @@ const Header = () => {
                   Shop
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to={"/shop"}>
-                  Orders
-                </NavLink>
-              </li>
             </ul>
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <NavLink className="nav-link" to={"/cart"}>
                   <i className="fas fa-dolly-flatbed me-1 text-gray"></i>Cart
-                  <small className="text-gray fw-normal">({cart.length})</small>
+                  {cart.length > 0 && (
+                    <small className="text-gray fw-normal">
+                      ({cart.length})
+                    </small>
+                  )}
                 </NavLink>
               </li>
               <li className="nav-item">

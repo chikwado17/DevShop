@@ -3,9 +3,10 @@ import AppLayout from "./ui/AppLayout";
 import Home from "./ui/Home";
 import Shop, { loader as ShopLoader } from "./pages/shop/Shop";
 import CartOverview from "./features/cart/CartOverview";
-import CreateOrder from "./features/order/CreateOrder";
+import CreateOrder, {
+  action as CreateOrderAction,
+} from "./features/order/CreateOrder";
 import SuccessPage from "./features/order/SuccessPage";
-import Order from "./features/order/Order";
 import NotFoundPage from "./pages/NotFoundPage";
 import ErrorPage from "./ui/ErrorPage";
 
@@ -22,9 +23,14 @@ function App() {
           errorElement: <ErrorPage />,
         },
         { path: "/cart", element: <CartOverview /> },
-        { path: "/order/new", element: <CreateOrder /> },
+        {
+          path: "/order/new",
+          element: <CreateOrder />,
+          action: CreateOrderAction,
+          errorElement: <ErrorPage />,
+        },
+
         { path: "/success", element: <SuccessPage /> },
-        { path: "/order/:id", element: <Order /> },
         { path: "*", element: <NotFoundPage /> },
       ],
     },
